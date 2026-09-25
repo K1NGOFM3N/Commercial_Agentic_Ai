@@ -1,0 +1,285 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_name": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "agent_name",
+        "timestamp"
+      ],
+      "type": "object"
+    },
+    "result": {
+      "additionalProperties": false,
+      "properties": {
+        "alternate_contacts": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "business_phone": {
+                "type": "string"
+              },
+              "contact_data_completeness_score": {
+                "type": "number"
+              },
+              "contact_data_status": {
+                "enum": [
+                  "verified",
+                  "inferred",
+                  "unavailable",
+                  "stale"
+                ],
+                "type": "string"
+              },
+              "evidence_score": {
+                "type": "number"
+              },
+              "field_sources": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "field_name": {
+                      "type": "string"
+                    },
+                    "retrieved_at": {
+                      "type": "string"
+                    },
+                    "source_provider": {
+                      "type": "string"
+                    },
+                    "source_reference": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    },
+                    "verification_state": {
+                      "enum": [
+                        "verified",
+                        "inferred",
+                        "unavailable",
+                        "stale"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "field_name",
+                    "value",
+                    "source_provider",
+                    "source_reference",
+                    "retrieved_at",
+                    "verification_state"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "linkedin_url": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "relevance_score": {
+                "type": "number"
+              },
+              "selection_rationale": {
+                "type": "string"
+              },
+              "seniority_authority_score": {
+                "type": "number"
+              },
+              "title": {
+                "type": "string"
+              },
+              "work_email": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "title",
+              "linkedin_url",
+              "work_email",
+              "business_phone",
+              "relevance_score",
+              "seniority_authority_score",
+              "evidence_score",
+              "contact_data_completeness_score",
+              "selection_rationale",
+              "contact_data_status",
+              "field_sources"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "gate_status": {
+          "enum": [
+            "allowed",
+            "gated_out",
+            "error"
+          ],
+          "type": "string"
+        },
+        "ranking_rationale": {
+          "type": "string"
+        },
+        "recommended_contact": {
+          "additionalProperties": false,
+          "properties": {
+            "business_phone": {
+              "type": "string"
+            },
+            "contact_data_completeness_score": {
+              "type": "number"
+            },
+            "contact_data_status": {
+              "enum": [
+                "verified",
+                "inferred",
+                "unavailable",
+                "stale"
+              ],
+              "type": "string"
+            },
+            "evidence_score": {
+              "type": "number"
+            },
+            "field_sources": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "field_name": {
+                    "type": "string"
+                  },
+                  "retrieved_at": {
+                    "type": "string"
+                  },
+                  "source_provider": {
+                    "type": "string"
+                  },
+                  "source_reference": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "verification_state": {
+                    "enum": [
+                      "verified",
+                      "inferred",
+                      "unavailable",
+                      "stale"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "field_name",
+                  "value",
+                  "source_provider",
+                  "source_reference",
+                  "retrieved_at",
+                  "verification_state"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "linkedin_url": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "relevance_score": {
+              "type": "number"
+            },
+            "selection_rationale": {
+              "type": "string"
+            },
+            "seniority_authority_score": {
+              "type": "number"
+            },
+            "title": {
+              "type": "string"
+            },
+            "work_email": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "title",
+            "linkedin_url",
+            "work_email",
+            "business_phone",
+            "relevance_score",
+            "seniority_authority_score",
+            "evidence_score",
+            "contact_data_completeness_score",
+            "selection_rationale",
+            "contact_data_status",
+            "field_sources"
+          ],
+          "type": "object"
+        },
+        "source_failures": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              },
+              "source_reference": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "source_reference",
+              "stage",
+              "error"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "gate_status",
+        "recommended_contact",
+        "alternate_contacts",
+        "ranking_rationale",
+        "source_failures"
+      ],
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "success",
+        "error"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "result",
+    "metadata"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,91 @@
+{
+  "nodes": [
+    {"id":"input","type":"Input","label":"Research Request","nodeCategory":"input"},
+    {"id":"coordinator","type":"Agent","label":"Prospect Intelligence Coordinator","nodeCategory":"agent","slug":"prospect-intelligence-coordinator"},
+    {"id":"research_manager","type":"Agent","label":"Company Research Manager","nodeCategory":"agent","agent_id":"6ab6d2277d6425d1391b2303"},
+    {"id":"apollo_researcher","type":"Agent","label":"Apollo Company Researcher","nodeCategory":"agent","agent_id":"6ab6d1f0bb8b456d0533f582"},
+    {"id":"website_analyst","type":"Agent","label":"Website Service Analyst","nodeCategory":"agent","agent_id":"6ab6d1ff7d6425d1391b22ff"},
+    {"id":"leadership_gate","type":"Conditional","label":"Leadership gate: indirect/non-competitor only","nodeCategory":"conditional","condition":"classification in [\"indirect_competitor\", \"non_competitor\"]"},
+    {"id":"leadership_analyst","type":"Agent","label":"Leadership Contact Analyst","nodeCategory":"agent","agent_id":"6ab6d211f13422e819356bf9"},
+    {"id":"report_consolidation","type":"Text","label":"Evidence-backed report consolidation","nodeCategory":"text"},
+    {"id":"output","type":"Output","label":"Research Report","nodeCategory":"end"}
+  ],
+  "edges": [
+    {"source":"input","target":"coordinator"},
+    {"source":"coordinator","target":"research_manager"},
+    {"source":"research_manager","target":"apollo_researcher","label":"Resolve organization and people"},
+    {"source":"research_manager","target":"website_analyst","label":"Compare target and Congero services"},
+    {"source":"research_manager","target":"leadership_gate","label":"Apply classification gate"},
+    {"source":"apollo_researcher","target":"report_consolidation","label":"Apollo evidence"},
+    {"source":"website_analyst","target":"report_consolidation","label":"Website evidence"},
+    {"source":"leadership_gate","target":"leadership_analyst","label":"Indirect/non-competitor only","condition":"classification in [\"indirect_competitor\", \"non_competitor\"]"},
+    {"source":"leadership_gate","target":"report_consolidation","label":"Direct competitor or insufficient evidence","condition":"classification not in [\"indirect_competitor\", \"non_competitor\"]"},
+    {"source":"leadership_analyst","target":"report_consolidation","label":"Ranked leadership contacts"},
+    {"source":"report_consolidation","target":"output"}
+  ],
+  "agents": [
+    {
+      "type":"git_agent",
+      "slug":"prospect-intelligence-coordinator",
+      "name":"Prospect Intelligence Coordinator",
+      "description":"Versioned root coordinator for evidence-backed competitor intelligence and billing-contact research against Congero Technology Group.",
+      "github_url":null,
+      "workflow_node_id":"coordinator",
+      "workbench_ui":true,
+      "model_preferred":"anthropic:claude-sonnet-4-6",
+      "skills":["intake-and-resolution","website-service-comparison","competitor-classification","leadership-billing-contact","batch-history-and-provenance"]
+    },
+    {
+      "type":"lyzr_agent",
+      "agent_id":"6ab6d2277d6425d1391b2303",
+      "name":"Company Research Manager",
+      "description":"Delegates Apollo and website research, resolves evidence, classifies competition, and gates leadership research.",
+      "workflow_node_id":"research_manager",
+      "provider_id":"Anthropic",
+      "model":"anthropic/claude-sonnet-4-6",
+      "temperature":0.1,
+      "top_p":0.9,
+      "managed_agents":["6ab6d1f0bb8b456d0533f582","6ab6d1ff7d6425d1391b22ff","6ab6d211f13422e819356bf9"]
+    },
+    {
+      "type":"lyzr_agent",
+      "agent_id":"6ab6d1f0bb8b456d0533f582",
+      "name":"Apollo Company Researcher",
+      "description":"Resolves target organizations in Apollo and returns source-backed company and leadership contact facts.",
+      "workflow_node_id":"apollo_researcher",
+      "provider_id":"Anthropic",
+      "model":"anthropic/claude-haiku-4-5",
+      "temperature":0.1,
+      "top_p":0.9,
+      "tool_configs":[{"tool_name":"apollo","tool_source":"composio","action_names":["APOLLO_ORGANIZATION_SEARCH","APOLLO_GET_ORGANIZATION","APOLLO_PEOPLE_SEARCH","APOLLO_PEOPLE_ENRICHMENT"]}]
+    },
+    {
+      "type":"lyzr_agent",
+      "agent_id":"6ab6d1ff7d6425d1391b22ff",
+      "name":"Website Service Analyst",
+      "description":"Extracts and compares target and Congero service claims with URL-level evidence using Browserbase.",
+      "workflow_node_id":"website_analyst",
+      "provider_id":"Anthropic",
+      "model":"anthropic/claude-sonnet-4-6",
+      "temperature":0.1,
+      "top_p":0.9,
+      "tool_configs":[{"tool_name":"BROWSERBASE","tool_source":"aci","action_names":["BROWSERBASE__CREATE_SESSION","BROWSERBASE__GET_SESSION"]}]
+    },
+    {
+      "type":"lyzr_agent",
+      "agent_id":"6ab6d211f13422e819356bf9",
+      "name":"Leadership Contact Analyst",
+      "description":"Ranks leadership contacts for billing-strategy outreach only after the indirect/non-competitor gate passes.",
+      "workflow_node_id":"leadership_analyst",
+      "provider_id":"Anthropic",
+      "model":"anthropic/claude-sonnet-4-6",
+      "temperature":0.2,
+      "top_p":0.9,
+      "tool_configs":[
+        {"tool_name":"apollo","tool_source":"composio","action_names":["APOLLO_PEOPLE_SEARCH","APOLLO_PEOPLE_ENRICHMENT"]},
+        {"tool_name":"linkedin","tool_source":"composio","action_names":["LINKEDIN_GET_PERSON","LINKEDIN_GET_COMPANY_INFO"]},
+        {"tool_name":"BROWSERBASE","tool_source":"aci","action_names":["BROWSERBASE__CREATE_SESSION","BROWSERBASE__GET_SESSION"]}
+      ]
+    }
+  ]
+}

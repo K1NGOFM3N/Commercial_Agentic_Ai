@@ -1,0 +1,199 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Prospect Intelligence Coordinator response",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "status": {"type":"string","enum":["success","error"]},
+    "result": {
+      "type":"object",
+      "additionalProperties": false,
+      "properties": {
+        "request_mode": {"type":"string","enum":["single","batch","rerun","unknown"]},
+        "company": {
+          "type":"object",
+          "additionalProperties": false,
+          "properties": {
+            "name": {"type":"string"},
+            "normalized_name": {"type":"string"},
+            "domain": {"type":"string"},
+            "location": {"type":"string"},
+            "apollo_organization_id": {"type":"string"},
+            "research_timestamp": {"type":"string"}
+          },
+          "required":["name","normalized_name","domain","location","apollo_organization_id","research_timestamp"]
+        },
+        "classification": {
+          "type":"object",
+          "additionalProperties": false,
+          "properties": {
+            "label": {"type":"string","enum":["direct_competitor","indirect_competitor","non_competitor","insufficient_evidence"]},
+            "confidence": {"type":"number"},
+            "rationale": {"type":"string"},
+            "overlapping_services": {"type":"array","items":{"type":"string"}},
+            "differentiators": {"type":"array","items":{"type":"string"}},
+            "unresolved_questions": {"type":"array","items":{"type":"string"}}
+          },
+          "required":["label","confidence","rationale","overlapping_services","differentiators","unresolved_questions"]
+        },
+        "service_comparison": {
+          "type":"array",
+          "items": {
+            "type":"object",
+            "additionalProperties": false,
+            "properties": {
+              "congero_service": {"type":"string"},
+              "target_service": {"type":"string"},
+              "overlap_rating": {"type":"string","enum":["high","medium","low","none","unknown"]},
+              "buyer_problem_relationship": {"type":"string"},
+              "evidence_references": {"type":"array","items":{"type":"string"}}
+            },
+            "required":["congero_service","target_service","overlap_rating","buyer_problem_relationship","evidence_references"]
+          }
+        },
+        "evidence": {
+          "type":"array",
+          "items": {
+            "type":"object",
+            "additionalProperties": false,
+            "properties": {
+              "source_provider": {"type":"string"},
+              "source_reference": {"type":"string"},
+              "url": {"type":"string"},
+              "page_title": {"type":"string"},
+              "excerpt": {"type":"string"},
+              "retrieved_at": {"type":"string"}
+            },
+            "required":["source_provider","source_reference","url","page_title","excerpt","retrieved_at"]
+          }
+        },
+        "leadership_gate": {
+          "type":"object",
+          "additionalProperties": false,
+          "properties": {
+            "decision": {"type":"string","enum":["allowed","gated_out"]},
+            "reason": {"type":"string"},
+            "allowed_classifications": {"type":"array","items":{"type":"string"}}
+          },
+          "required":["decision","reason","allowed_classifications"]
+        },
+        "recommended_contact": {
+          "type":"object",
+          "additionalProperties": false,
+          "properties": {
+            "name": {"type":"string"},
+            "title": {"type":"string"},
+            "linkedin_url": {"type":"string"},
+            "work_email": {"type":"string"},
+            "business_phone": {"type":"string"},
+            "contact_data_status": {"type":"string","enum":["verified","inferred","unavailable","stale"]},
+            "selection_rationale": {"type":"string"},
+            "field_sources": {
+              "type":"array",
+              "items": {
+                "type":"object",
+                "additionalProperties": false,
+                "properties": {
+                  "field_name": {"type":"string"},
+                  "value": {"type":"string"},
+                  "source_provider": {"type":"string"},
+                  "source_reference": {"type":"string"},
+                  "retrieved_at": {"type":"string"},
+                  "verification_state": {"type":"string","enum":["verified","inferred","unavailable","stale"]}
+                },
+                "required":["field_name","value","source_provider","source_reference","retrieved_at","verification_state"]
+              }
+            }
+          },
+          "required":["name","title","linkedin_url","work_email","business_phone","contact_data_status","selection_rationale","field_sources"]
+        },
+        "alternate_contacts": {
+          "type":"array",
+          "items": {
+            "type":"object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {"type":"string"},
+              "title": {"type":"string"},
+              "linkedin_url": {"type":"string"},
+              "work_email": {"type":"string"},
+              "business_phone": {"type":"string"},
+              "contact_data_status": {"type":"string","enum":["verified","inferred","unavailable","stale"]},
+              "selection_rationale": {"type":"string"},
+              "field_sources": {
+                "type":"array",
+                "items": {
+                  "type":"object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field_name": {"type":"string"},
+                    "value": {"type":"string"},
+                    "source_provider": {"type":"string"},
+                    "source_reference": {"type":"string"},
+                    "retrieved_at": {"type":"string"},
+                    "verification_state": {"type":"string","enum":["verified","inferred","unavailable","stale"]}
+                  },
+                  "required":["field_name","value","source_provider","source_reference","retrieved_at","verification_state"]
+                }
+              }
+            },
+            "required":["name","title","linkedin_url","work_email","business_phone","contact_data_status","selection_rationale","field_sources"]
+          }
+        },
+        "batch": {
+          "type":"object",
+          "additionalProperties": false,
+          "properties": {
+            "batch_id": {"type":"string"},
+            "item_index": {"type":"integer"},
+            "item_count": {"type":"integer"},
+            "item_status": {"type":"string","enum":["queued","researching","reviewing","complete","blocked","failed"]}
+          },
+          "required":["batch_id","item_index","item_count","item_status"]
+        },
+        "source_failures": {
+          "type":"array",
+          "items": {
+            "type":"object",
+            "additionalProperties": false,
+            "properties": {
+              "source_reference": {"type":"string"},
+              "stage": {"type":"string"},
+              "error": {"type":"string"}
+            },
+            "required":["source_reference","stage","error"]
+          }
+        },
+        "run_status": {"type":"string","enum":["complete","partial","blocked","failed"]},
+        "agent_events": {
+          "type":"array",
+          "items": {
+            "type":"object",
+            "additionalProperties": false,
+            "properties": {
+              "agent_name": {"type":"string"},
+              "event_type": {"type":"string"},
+              "tool": {"type":"string"},
+              "timestamp": {"type":"string"},
+              "duration_ms": {"type":"number"},
+              "status": {"type":"string"},
+              "summary": {"type":"string"}
+            },
+            "required":["agent_name","event_type","tool","timestamp","duration_ms","status","summary"]
+          }
+        }
+      },
+      "required":["request_mode","company","classification","service_comparison","evidence","leadership_gate","recommended_contact","alternate_contacts","batch","source_failures","run_status","agent_events"]
+    },
+    "metadata": {
+      "type":"object",
+      "additionalProperties": false,
+      "properties": {
+        "agent_name": {"type":"string"},
+        "timestamp": {"type":"string"}
+      },
+      "required":["agent_name","timestamp"]
+    }
+  },
+  "required":["status","result","metadata"]
+}

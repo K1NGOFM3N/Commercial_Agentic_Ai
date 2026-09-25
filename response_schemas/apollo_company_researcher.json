@@ -1,0 +1,183 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_name": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "agent_name",
+        "timestamp"
+      ],
+      "type": "object"
+    },
+    "result": {
+      "additionalProperties": false,
+      "properties": {
+        "company_match_status": {
+          "enum": [
+            "matched",
+            "ambiguous",
+            "not_found",
+            "error"
+          ],
+          "type": "string"
+        },
+        "contact_data_notes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "organization": {
+          "additionalProperties": false,
+          "properties": {
+            "apollo_organization_id": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "domain": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string"
+            },
+            "match_explanation": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "normalized_name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "apollo_organization_id",
+            "name",
+            "normalized_name",
+            "domain",
+            "location",
+            "description",
+            "match_explanation"
+          ],
+          "type": "object"
+        },
+        "people": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "apollo_person_id": {
+                "type": "string"
+              },
+              "business_phone": {
+                "type": "string"
+              },
+              "contact_data_status": {
+                "enum": [
+                  "verified",
+                  "inferred",
+                  "unavailable",
+                  "stale"
+                ],
+                "type": "string"
+              },
+              "department": {
+                "type": "string"
+              },
+              "linkedin_url": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "source_reference": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "work_email": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "apollo_person_id",
+              "name",
+              "title",
+              "department",
+              "linkedin_url",
+              "work_email",
+              "business_phone",
+              "contact_data_status",
+              "source_reference"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "source_records": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "retrieved_at": {
+                "type": "string"
+              },
+              "source_action": {
+                "type": "string"
+              },
+              "source_provider": {
+                "type": "string"
+              },
+              "source_reference": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "source_provider",
+              "source_action",
+              "source_reference",
+              "retrieved_at",
+              "summary"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "company_match_status",
+        "organization",
+        "people",
+        "contact_data_notes",
+        "source_records"
+      ],
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "success",
+        "error"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "result",
+    "metadata"
+  ],
+  "type": "object"
+}

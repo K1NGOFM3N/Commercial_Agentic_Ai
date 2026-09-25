@@ -1,0 +1,222 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_name": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "agent_name",
+        "timestamp"
+      ],
+      "type": "object"
+    },
+    "result": {
+      "additionalProperties": false,
+      "properties": {
+        "comparison_matrix": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "buyer_problem_relationship": {
+                "type": "string"
+              },
+              "congero_claim": {
+                "type": "string"
+              },
+              "congero_evidence_ids": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "differentiators": {
+                "type": "string"
+              },
+              "overlap_rating": {
+                "enum": [
+                  "high",
+                  "medium",
+                  "low",
+                  "none",
+                  "unknown"
+                ],
+                "type": "string"
+              },
+              "service_category": {
+                "type": "string"
+              },
+              "target_claim": {
+                "type": "string"
+              },
+              "target_evidence_ids": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "service_category",
+              "target_claim",
+              "congero_claim",
+              "overlap_rating",
+              "buyer_problem_relationship",
+              "differentiators",
+              "target_evidence_ids",
+              "congero_evidence_ids"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "congero_domain": {
+          "type": "string"
+        },
+        "congero_findings": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "claim": {
+                "type": "string"
+              },
+              "evidence_id": {
+                "type": "string"
+              },
+              "excerpt": {
+                "type": "string"
+              },
+              "page_title": {
+                "type": "string"
+              },
+              "retrieved_at": {
+                "type": "string"
+              },
+              "source_status": {
+                "enum": [
+                  "observed",
+                  "partial",
+                  "failed"
+                ],
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "evidence_id",
+              "page_title",
+              "url",
+              "claim",
+              "excerpt",
+              "retrieved_at",
+              "source_status"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "source_failures": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              },
+              "source_reference": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "source_reference",
+              "stage",
+              "error"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "target_domain": {
+          "type": "string"
+        },
+        "target_findings": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "claim": {
+                "type": "string"
+              },
+              "evidence_id": {
+                "type": "string"
+              },
+              "excerpt": {
+                "type": "string"
+              },
+              "page_title": {
+                "type": "string"
+              },
+              "retrieved_at": {
+                "type": "string"
+              },
+              "source_status": {
+                "enum": [
+                  "observed",
+                  "partial",
+                  "failed"
+                ],
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "evidence_id",
+              "page_title",
+              "url",
+              "claim",
+              "excerpt",
+              "retrieved_at",
+              "source_status"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "target_domain",
+        "congero_domain",
+        "target_findings",
+        "congero_findings",
+        "comparison_matrix",
+        "source_failures"
+      ],
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "success",
+        "error"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "result",
+    "metadata"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,444 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "additionalProperties": false,
+      "properties": {
+        "agent_name": {
+          "type": "string"
+        },
+        "sub_agents_used": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "timestamp": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "agent_name",
+        "timestamp",
+        "sub_agents_used"
+      ],
+      "type": "object"
+    },
+    "result": {
+      "additionalProperties": false,
+      "properties": {
+        "alternate_contacts": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "business_phone": {
+                "type": "string"
+              },
+              "contact_data_status": {
+                "enum": [
+                  "verified",
+                  "inferred",
+                  "unavailable",
+                  "stale"
+                ],
+                "type": "string"
+              },
+              "field_sources": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "field_name": {
+                      "type": "string"
+                    },
+                    "retrieved_at": {
+                      "type": "string"
+                    },
+                    "source_provider": {
+                      "type": "string"
+                    },
+                    "source_reference": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    },
+                    "verification_state": {
+                      "enum": [
+                        "verified",
+                        "inferred",
+                        "unavailable",
+                        "stale"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "field_name",
+                    "value",
+                    "source_provider",
+                    "source_reference",
+                    "retrieved_at",
+                    "verification_state"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "linkedin_url": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "selection_rationale": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "work_email": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "title",
+              "linkedin_url",
+              "work_email",
+              "business_phone",
+              "contact_data_status",
+              "selection_rationale",
+              "field_sources"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "classification": {
+          "additionalProperties": false,
+          "properties": {
+            "confidence": {
+              "type": "number"
+            },
+            "differentiators": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "label": {
+              "enum": [
+                "direct_competitor",
+                "indirect_competitor",
+                "non_competitor",
+                "insufficient_evidence"
+              ],
+              "type": "string"
+            },
+            "overlapping_services": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "rationale": {
+              "type": "string"
+            },
+            "unresolved_questions": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "label",
+            "confidence",
+            "rationale",
+            "overlapping_services",
+            "differentiators",
+            "unresolved_questions"
+          ],
+          "type": "object"
+        },
+        "company": {
+          "additionalProperties": false,
+          "properties": {
+            "apollo_organization_id": {
+              "type": "string"
+            },
+            "domain": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "normalized_name": {
+              "type": "string"
+            },
+            "research_timestamp": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "normalized_name",
+            "domain",
+            "location",
+            "apollo_organization_id",
+            "research_timestamp"
+          ],
+          "type": "object"
+        },
+        "evidence": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "excerpt": {
+                "type": "string"
+              },
+              "page_title": {
+                "type": "string"
+              },
+              "retrieved_at": {
+                "type": "string"
+              },
+              "source_provider": {
+                "type": "string"
+              },
+              "source_reference": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "source_provider",
+              "source_reference",
+              "url",
+              "page_title",
+              "excerpt",
+              "retrieved_at"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "leadership_gate": {
+          "additionalProperties": false,
+          "properties": {
+            "allowed_classifications": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "decision": {
+              "enum": [
+                "allowed",
+                "gated_out"
+              ],
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "decision",
+            "reason",
+            "allowed_classifications"
+          ],
+          "type": "object"
+        },
+        "recommended_contact": {
+          "additionalProperties": false,
+          "properties": {
+            "business_phone": {
+              "type": "string"
+            },
+            "contact_data_status": {
+              "enum": [
+                "verified",
+                "inferred",
+                "unavailable",
+                "stale"
+              ],
+              "type": "string"
+            },
+            "field_sources": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "field_name": {
+                    "type": "string"
+                  },
+                  "retrieved_at": {
+                    "type": "string"
+                  },
+                  "source_provider": {
+                    "type": "string"
+                  },
+                  "source_reference": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "verification_state": {
+                    "enum": [
+                      "verified",
+                      "inferred",
+                      "unavailable",
+                      "stale"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "field_name",
+                  "value",
+                  "source_provider",
+                  "source_reference",
+                  "retrieved_at",
+                  "verification_state"
+                ],
+                "type": "object"
+              },
+              "type": "object"
+            },
+            "linkedin_url": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "selection_rationale": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "work_email": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "title",
+            "linkedin_url",
+            "work_email",
+            "business_phone",
+            "contact_data_status",
+            "selection_rationale",
+            "field_sources"
+          ],
+          "type": "object"
+        },
+        "run_status": {
+          "enum": [
+            "complete",
+            "partial",
+            "blocked",
+            "failed"
+          ],
+          "type": "string"
+        },
+        "service_comparison": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "buyer_problem_relationship": {
+                "type": "string"
+              },
+              "congero_service": {
+                "type": "string"
+              },
+              "evidence_references": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "overlap_rating": {
+                "enum": [
+                  "high",
+                  "medium",
+                  "low",
+                  "none",
+                  "unknown"
+                ],
+                "type": "string"
+              },
+              "target_service": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "congero_service",
+              "target_service",
+              "overlap_rating",
+              "buyer_problem_relationship",
+              "evidence_references"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "source_failures": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              },
+              "source_reference": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "source_reference",
+              "stage",
+              "error"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "company",
+        "classification",
+        "service_comparison",
+        "evidence",
+        "leadership_gate",
+        "recommended_contact",
+        "alternate_contacts",
+        "source_failures",
+        "run_status"
+      ],
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "success",
+        "error"
+      ],
+      "type": "string"
+    }
+  },
+  "required": [
+    "status",
+    "result",
+    "metadata"
+  ],
+  "type": "object"
+}
