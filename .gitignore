@@ -49,3 +49,6 @@ available_models_for_agent.json
 
 # Git-native agents — synced to their own repos, never part of the app repo
 prospect-intelligence-coordinator-agent/
+.lyra-workflow-state.json
+workflow_state.json
+.harness/progress.md
